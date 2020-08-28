@@ -1,20 +1,28 @@
+import pandas as pd
 
 
-def result_number_counter(
-        dict_of_dataframes):
+def result_number_counter (
+        dataframe: pd.DataFrame) :
+    count_list = []
+    column_names = dataframe.columns.tolist ()
 
-    number_repetition_dict = dict_of_dataframes.value_counts ()
+    final_count = pd.DataFrame ( [] )
 
-    return number_repetition
-    #number_count_row = 0
-    #number_count_column = 0
+    for name in column_names :
+        count = dataframe[name].value_counts ()
+        count_list.append ( count )
 
-    '''number_repetition = {}
-    for table, dataframe in dict_of_dataframes.items():
-        for value in dataframe:
-            value.count()
-            number_count_row += 1
+        final_count = final_count.append ( count_list )
 
-         for value in dataframe:
-            value.count(axis='columns')
-            number_count_column +=1'''
+        count_list.clear ()
+
+    print ( final_count )
+    return final_count
+
+
+def row_value_counter (
+        dataframe: pd.DataFrame) :
+
+    duplicatedrowsdf = dataframe[dataframe.duplicated ()]
+
+    return duplicatedrowsdf
